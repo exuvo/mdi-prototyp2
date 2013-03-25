@@ -32,6 +32,10 @@ public class MapTab extends Fragment implements CatDiff{
 		
 		if(Places.destination != null){
 			im.setImageResource(R.drawable.karta);
+			i1.setVisibility(View.INVISIBLE);
+			i2.setVisibility(View.INVISIBLE);
+			i3.setVisibility(View.INVISIBLE);
+			i4.setVisibility(View.INVISIBLE);
 		}else{
 			im.setImageResource(R.drawable.tomkarta);
 			if(Categories.isActive("food")){
@@ -44,7 +48,7 @@ public class MapTab extends Fragment implements CatDiff{
 			}else{
 				i2.setVisibility(View.INVISIBLE);
 			}
-			if(Categories.isActive("coffe")){
+			if(Categories.isActive("café")){
 				i3.setVisibility(View.VISIBLE);
 			}else{
 				i3.setVisibility(View.INVISIBLE);
