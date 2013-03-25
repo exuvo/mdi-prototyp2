@@ -36,6 +36,12 @@ public class MapTab extends Fragment implements CatDiff{
 			i2.setVisibility(View.INVISIBLE);
 			i3.setVisibility(View.INVISIBLE);
 			i4.setVisibility(View.INVISIBLE);
+		}else if(Categories.getActive().size() == 0){//Show all
+			im.setImageResource(R.drawable.tomkarta);
+			i1.setVisibility(View.VISIBLE);
+			i2.setVisibility(View.VISIBLE);
+			i3.setVisibility(View.VISIBLE);
+			i4.setVisibility(View.VISIBLE);
 		}else{
 			im.setImageResource(R.drawable.tomkarta);
 			if(Categories.isActive("food")){

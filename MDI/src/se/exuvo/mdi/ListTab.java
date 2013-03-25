@@ -37,7 +37,8 @@ public class ListTab extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Places.destination = items.get(position);
 				Places.notifyChanged();
-				Toast.makeText(rootView.getContext(), "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
+				getActivity().getActionBar().setSelectedNavigationItem(getActivity().getActionBar().getTabCount()-1);
+//				Toast.makeText(rootView.getContext(), "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
 			}
 		});
 		return rootView;
