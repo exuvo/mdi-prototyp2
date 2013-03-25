@@ -1,6 +1,7 @@
 package se.exuvo.mdi;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import se.exuvo.mdi.Categories.CatDiff;
@@ -39,12 +40,6 @@ public class CategoriesTab extends Fragment {
 		grid.setAdapter(imad);
 
 		return rootView;
-	}
-	
-	public static void notifyChanged(){
-		for(ImageAdapter e : cattab){
-			e.catu();
-		}
 	}
 	
 	public class ImageAdapter extends BaseAdapter implements CatDiff{
@@ -93,6 +88,7 @@ public class CategoriesTab extends Fragment {
 					view.getBackground().clearColorFilter();
 					view.invalidate();
 				}
+	            final Object t = this;
 	            view.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -107,7 +103,11 @@ public class CategoriesTab extends Fragment {
 		                    v.invalidate();
 						}
 						Categories.notifyChanged();
-						notifyChanged();
+						Iterator<ImageAdapter> it = cattab.iterator();
+						while(it.next() != t){}
+						while(it.hasNext()){
+							it.next().catu();
+						}
 					}
 				});
 			} else {
@@ -126,6 +126,7 @@ public class CategoriesTab extends Fragment {
 					if(cat.selected){
 						for(Category c : cat.subs){
 							items.add(c);
+							notifyDataSetChanged();
 						}
 					}
 				}

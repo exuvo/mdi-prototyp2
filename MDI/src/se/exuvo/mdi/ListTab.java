@@ -122,7 +122,7 @@ public class ListTab extends Fragment {
 			Place p = items.get(position).p;
 			textName.setText(p.name);
 			textDesc.setText(p.desc);
-			textDist.setText("" + p.dist);
+			textDist.setText("" + p.dist + "m");
 			imageView.setImageResource(items.get(position).cat.imgID);
 			return rowView;
 		}
