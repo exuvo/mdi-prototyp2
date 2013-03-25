@@ -13,8 +13,13 @@ public class Categories {
 	}
 	
 	public static void load(){
-		cats.add(new Category("museum", R.drawable.museum));
 		cats.add(new Category("food", R.drawable.restaurant).addSub(new Category("pizza", R.drawable.pizza)).addSub(new Category("café", R.drawable.coffe)));
+		cats.add(new Category("museum", R.drawable.museum));
+		cats.add(new Category("cat1", R.drawable.fisk));
+		cats.add(new Category("cat2", R.drawable.fisk));
+		cats.add(new Category("cat3", R.drawable.fisk));
+		cats.add(new Category("cat4", R.drawable.fisk));
+		cats.add(new Category("cat5", R.drawable.fisk));
 	}
 	
 	public static int getIMG(String cat){
