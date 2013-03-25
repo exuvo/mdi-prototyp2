@@ -53,6 +53,15 @@ public class Categories {
 		return false;
 	}
 	
+	public static void deselectSubs(Category c){
+		for(Category cat : c.subs){
+			cat.selected = false;
+			for(Category cc: cat.subs){
+				deselectSubs(cc);
+			}
+		}
+	}
+	
 	private static boolean getActive(Category c, List<Category> l){
 		boolean ret = false;
 		for(Category cat : c.subs){
