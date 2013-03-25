@@ -8,12 +8,19 @@ import se.exuvo.mdi.Categories.CatDiff;
 
 public class Places {
 	public static final ArrayList<CatDiff> ev = new ArrayList<CatDiff>();
-	public static final List<Place> places = Arrays.asList(new Place[] { new Place("Pizza Hut", "Pizzas", 40, new String[] { "food", "pizza" }),
-			new Place("A", "a", 1, new String[] { "touhou" }), new Place("F", "f", 23, new String[] { "food" }),
-			new Place("B", "b", 2, new String[] { "café" }), new Place("G", "g", 9, new String[] { "food" }),
-			new Place("C", "c", 3, new String[] { "touhou" }), new Place("H", "h", 150, new String[] { "food" }),
-			new Place("D", "d", 4, new String[] { "museum" }), new Place("I", "i", 242, new String[] { "food","pizza" }),
-			new Place("E", "e", 5, new String[] { "café" }), new Place("J", "j", 123, new String[] { "food" }) });
+	public static final List<Place> places = Arrays.asList(
+			new Place[] {
+				new Place("Kebaberiet", "Kebabs", 123, new String[] { "food" }),
+				new Place("Pizza Hut", "Pizzas", 40, new String[] { "food", "pizza" }),
+				new Place("Al Dente", "Pizzas", 242, new String[] { "food","pizza" }),
+				new Place("Café gräs", "Tea", 9, new String[] { "food" }),
+				new Place("Uffes te", "tea", 2, new String[] { "food", "café" }),
+				new Place("Humlans Café", "Cofee", 5, new String[] { "food", "café" }),
+				new Place("Vatten muséet", "Water", 150, new String[] { "museum" }),
+				new Place("Stone muséet", "Stones", 4, new String[] { "museum" }),
+				new Place("Fisk muséet", "Fish", 4, new String[] { "museum" })
+			}
+	);
 	
 	public static Place destination;
 	
