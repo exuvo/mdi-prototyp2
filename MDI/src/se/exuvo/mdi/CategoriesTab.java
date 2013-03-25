@@ -1,12 +1,15 @@
 package se.exuvo.mdi;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import se.exuvo.mdi.Categories.CatDiff;
 import se.exuvo.mdi.Categories.Category;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,7 +20,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class CategoriesTab extends Fragment {
-
+	public static final List<ImageAdapter> cattab = new ArrayList<ImageAdapter>();
+	
 	public CategoriesTab() {};
 
 	/**
@@ -30,27 +34,34 @@ public class CategoriesTab extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_cat, container, false);
 		final Context c = rootView.getContext();
 		GridView grid = (GridView) rootView.findViewById(R.id.grid);
-		ImageAdapter ad = new ImageAdapter(c, (Category) getArguments().get(ARG_TOPCAT));
-		grid.setAdapter(ad);
+		ImageAdapter imad = new ImageAdapter(c, (Integer) getArguments().get(ARG_TOPCAT));
+		cattab.add(imad);
+		grid.setAdapter(imad);
 
 		return rootView;
 	}
 	
-	public static class ImageAdapter extends BaseAdapter {
+	public static void notifyChanged(){
+		for(ImageAdapter e : cattab){
+			e.catu();
+		}
+	}
+	
+	public class ImageAdapter extends BaseAdapter implements CatDiff{
 		private Context mContext;
-		private ArrayList<Category> items = new ArrayList<Category>();
+		public ArrayList<Category> items = new ArrayList<Category>();
+		public ImageAdapter topCat;
 		
-		public ImageAdapter(Context c, Category topCat) {
+		public ImageAdapter(Context c, Integer topCatID) {
 			mContext = c;
 			items.clear();
-			if(topCat == null){
+			if(topCatID == null){
 				for(Category cat : Categories.cats){
 					items.add(cat);
 				}
 			}else{
-				for(Category cat : topCat.subs){
-					items.add(cat);
-				}
+				topCat = cattab.get(topCatID);
+				catu();
 			}
 		}
 
@@ -95,8 +106,8 @@ public class CategoriesTab extends Fragment {
 							v.getBackground().clearColorFilter();
 		                    v.invalidate();
 						}
-						Places.destination = null;
 						Categories.notifyChanged();
+						notifyChanged();
 					}
 				});
 			} else {
@@ -105,6 +116,20 @@ public class CategoriesTab extends Fragment {
 
 	        view.setImageResource(items.get(position).imgID);
 			return view;
+		}
+
+		@Override
+		public void catu() {
+			if(topCat != null){
+				items.clear();
+				for(Category cat : topCat.items){
+					if(cat.selected){
+						for(Category c : cat.subs){
+							items.add(c);
+						}
+					}
+				}
+			}
 		}
 
 	}

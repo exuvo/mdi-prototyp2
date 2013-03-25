@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -50,8 +51,10 @@ public class MainActivity extends FragmentActivity {
 		Categories.load();
         mTabsAdapter.addTab(actionBar.newTab().setText("Categories"),
                             CategoriesTab.class, new Bundle());
-//        mTabsAdapter.addTab(actionBar.newTab().setText("SubCat"),
-//                            CategoriesTab.class, null);
+        Bundle b = new Bundle();
+        b.putInt(CategoriesTab.ARG_TOPCAT, 0);
+        mTabsAdapter.addTab(null,
+                            CategoriesTab.class, b);
         mTabsAdapter.addTab(actionBar.newTab().setText("List"),
                             ListTab.class, null);
         mTabsAdapter.addTab(actionBar.newTab().setText("Map"),
@@ -127,10 +130,12 @@ public class MainActivity extends FragmentActivity {
 
         public void addTab(ActionBar.Tab tab, Class<?> clss, Bundle args) {
             TabInfo info = new TabInfo(clss, args);
-            tab.setTag(info);
-            tab.setTabListener(this);
+            if(tab != null){
+	            tab.setTag(info);
+	            tab.setTabListener(this);
+	            mActionBar.addTab(tab);
+            }
             mTabs.add(info);
-            mActionBar.addTab(tab);
             notifyDataSetChanged();
         }
 
@@ -151,7 +156,30 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public void onPageSelected(int position) {
-            mActionBar.setSelectedNavigationItem(position);
+        	if(position == 0){
+        		mActionBar.setSelectedNavigationItem(0);
+        	}else if(position == mTabs.size()-2){
+        		mActionBar.setSelectedNavigationItem(1);
+        	}else if(position == mTabs.size()-1){
+        		mActionBar.setSelectedNavigationItem(2);
+        	}else{
+        		mActionBar.getTabAt(0).setTabListener(new TabListener() {
+					@Override
+					public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+					}
+					@Override
+					public void onTabSelected(Tab tab, FragmentTransaction ft) {
+					}
+					@Override
+					public void onTabReselected(Tab tab, FragmentTransaction ft) {
+					}
+				});
+        		mActionBar.setSelectedNavigationItem(0);
+        		mActionBar.getTabAt(0).setTabListener(this);
+        	}
+            if(position == 0){
+            	Places.destination = null;
+            }
         }
 
         @Override
@@ -160,13 +188,17 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public void onTabSelected(Tab tab, FragmentTransaction ft) {
-//            Object tag = tab.getTag();
-//            for (int i=0; i<mTabs.size(); i++) {
-//                if (mTabs.get(i) == tag) {
-//                    mViewPager.setCurrentItem(i);
-//                }
-//            }
-        	mViewPager.setCurrentItem(tab.getPosition());
+            Object tag = tab.getTag();
+            for (int i=0; i<mTabs.size(); i++) {
+                if (mTabs.get(i) == tag) {
+                    mViewPager.setCurrentItem(i);
+                }
+            }
+        	int position = tab.getPosition();
+        	if(position == 0){
+            	Places.destination = null;
+            }
+//        	mViewPager.setCurrentItem(position);
         }
 
         @Override
