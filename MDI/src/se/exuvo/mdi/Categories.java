@@ -44,6 +44,15 @@ public class Categories {
 		return false;
 	}
 	
+	public static boolean isActive(){
+		for(Category c : cats){
+			if(c.selected && c.subs.size()>0){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	private static boolean getActive(Category c, List<Category> l){
 		boolean ret = false;
 		for(Category cat : c.subs){

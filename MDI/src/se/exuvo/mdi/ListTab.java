@@ -3,7 +3,9 @@ package se.exuvo.mdi;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import se.exuvo.mdi.Categories.CatDiff;
 import se.exuvo.mdi.Categories.Category;
@@ -11,11 +13,14 @@ import se.exuvo.mdi.Places.Place;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -23,6 +28,8 @@ import android.widget.TextView;
 
 public class ListTab extends Fragment {
 	private static ArrayList<Item> items = new ArrayList<Item>();
+	public static ListAdapter ad;
+	private static AutoCompleteTextView search;
 
 	public static class Item {
 		Place p;
@@ -41,7 +48,7 @@ public class ListTab extends Fragment {
 		final View rootView = inflater.inflate(R.layout.fragment_list, container, false);
 		final Context c = rootView.getContext();
 		ListView list = (ListView) rootView.findViewById(R.id.list);
-		ListAdapter ad = new ListAdapter(c);
+		ad = new ListAdapter(c);
 		list.setAdapter(ad);
 		list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -52,16 +59,40 @@ public class ListTab extends Fragment {
 //				Toast.makeText(rootView.getContext(), "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
 			}
 		});
+		search = (AutoCompleteTextView) rootView.findViewById(R.id.search);
+		search.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+				ad.filter(s.toString());
+			}
+		});
 		return rootView;
 	}
 
 	public static class ListAdapter extends BaseAdapter implements CatDiff {
 		private Context mContext;
+		private String filter = "";
 
 		public ListAdapter(Context c) {
 			mContext = c;
 			catu();
 			Categories.ev.add(this);
+		}
+		
+		public void filter(String s){
+			if(s == null){
+				search.setText("");
+			}else{
+				filter = s.toLowerCase(Locale.US);
+				catu();
+			}
+			
 		}
 
 		public void catu() {
@@ -81,6 +112,14 @@ public class ListTab extends Fragment {
 								continue loop;
 							}
 						}
+				}
+			}
+			
+			Iterator<Item> it= items.iterator();
+			while(it.hasNext()){
+				Item i = it.next();
+				if(!i.p.name.toLowerCase(Locale.US).contains(filter) && !i.p.desc.toLowerCase(Locale.US).contains(filter)){
+					it.remove();
 				}
 			}
 

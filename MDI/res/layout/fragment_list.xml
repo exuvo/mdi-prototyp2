@@ -5,12 +5,26 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    
     tools:context=".MainActivity$DummySectionFragment" >
+    
+    <AutoCompleteTextView
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/list"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/list"
+        android:ems="10"
+        android:hint="search" >
+
+        <requestFocus />
+    </AutoCompleteTextView>
 
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/search" />
 
 </RelativeLayout>

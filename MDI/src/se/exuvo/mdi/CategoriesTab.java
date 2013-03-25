@@ -33,9 +33,8 @@ public class CategoriesTab extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_cat, container, false);
-		final Context c = rootView.getContext();
 		GridView grid = (GridView) rootView.findViewById(R.id.grid);
-		ImageAdapter imad = new ImageAdapter(c, (Integer) getArguments().get(ARG_TOPCAT));
+		ImageAdapter imad = new ImageAdapter(rootView.getContext(), (Integer) getArguments().get(ARG_TOPCAT));
 		cattab.add(imad);
 		grid.setAdapter(imad);
 
@@ -105,7 +104,9 @@ public class CategoriesTab extends Fragment {
 						Iterator<ImageAdapter> it = cattab.iterator();
 						while(it.next() != t){}
 						while(it.hasNext()){
-							it.next().catu();
+							ImageAdapter ia = it.next();
+							ia.catu();
+							ia.notifyDataSetChanged();
 						}
 //						Toast.makeText(v.getContext(), c.name, Toast.LENGTH_SHORT).show();
 					}
