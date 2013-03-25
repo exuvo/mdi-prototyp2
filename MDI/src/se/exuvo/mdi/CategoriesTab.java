@@ -93,7 +93,6 @@ public class CategoriesTab extends Fragment {
 					@Override
 					public void onClick(View v) {
 						Category c = items.get(position);
-						Toast.makeText(v.getContext(), c.name, Toast.LENGTH_SHORT).show();
 						c.selected = !c.selected;
 						if(c.selected){
 							v.getBackground().setColorFilter(0xe0f47521,PorterDuff.Mode.SRC_ATOP);
@@ -108,6 +107,7 @@ public class CategoriesTab extends Fragment {
 						while(it.hasNext()){
 							it.next().catu();
 						}
+//						Toast.makeText(v.getContext(), c.name, Toast.LENGTH_SHORT).show();
 					}
 				});
 			} else {

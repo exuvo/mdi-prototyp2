@@ -48,8 +48,8 @@ public class Categories {
 		boolean ret = false;
 		for(Category cat : c.subs){
 			if(cat.selected){
-				if(!getActive(c, l)){
-					l.add(c);
+				if(!getActive(cat, l)){
+					l.add(cat);
 				}
 				ret = true;
 			}
