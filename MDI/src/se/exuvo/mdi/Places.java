@@ -18,7 +18,7 @@ public class Places {
 				new Place("Humlans Café", "Cofee", 5, new String[] { "food", "café" }),
 				new Place("Vatten muséet", "Water", 150, new String[] { "museum" }),
 				new Place("Stone muséet", "Stones", 4, new String[] { "museum" }),
-				new Place("Fisk Museum", "Fish", 4, new String[] { "museum" })
+				new Place("Fisk muséet", "Fish", 4, new String[] { "museum" })
 			}
 	);
 	
