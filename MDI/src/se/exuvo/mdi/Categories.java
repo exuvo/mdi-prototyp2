@@ -14,9 +14,7 @@ public class Categories {
 	
 	public static void load(){
 		cats.add(new Category("museum", R.drawable.museum));
-		cats.add(new Category("food", R.drawable.restaurant).addSub(new Category("pizza", R.drawable.pizza)));
-		cats.add(new Category("touhou", R.drawable.touhou));
-		cats.add(new Category("café", R.drawable.coffe));
+		cats.add(new Category("food", R.drawable.restaurant).addSub(new Category("pizza", R.drawable.pizza)).addSub(new Category("café", R.drawable.coffe)));
 	}
 	
 	public static int getIMG(String cat){
