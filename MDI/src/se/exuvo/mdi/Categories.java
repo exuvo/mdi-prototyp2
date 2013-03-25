@@ -19,13 +19,22 @@ public class Categories {
 		cats.add(new Category("café", R.drawable.coffe));
 	}
 	
-	public int getIMG(String cat){
+	public static int getIMG(String cat){
 		for(Category c : getActive()){
 			if(cat.equals(c.name)){
 				return c.imgID;
 			}
 		}
 		return 0;
+	}
+	
+	public static Category getCat(String cat){
+		for(Category c : cats){
+			if(cat.equals(c.name)){
+				return c;
+			}
+		}
+		return null;
 	}
 	
 	public static boolean isActive(String cat){

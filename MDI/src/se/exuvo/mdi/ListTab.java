@@ -1,6 +1,8 @@
 package se.exuvo.mdi;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import se.exuvo.mdi.Categories.CatDiff;
@@ -21,7 +23,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ListTab extends Fragment {
-	private static ArrayList<Place> items = new ArrayList<Place>();
+	private static ArrayList<Item> items = new ArrayList<Item>();
+
+	public static class Item {
+		Place p;
+		Category cat;
+
+		public Item(Place _p, Category _cat) {
+			p = _p;
+			cat = _cat;
+		}
+	}
 
 	public ListTab() {}
 
@@ -35,9 +47,9 @@ public class ListTab extends Fragment {
 		list.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Places.destination = items.get(position);
+				Places.destination = items.get(position).p;
 				Places.notifyChanged();
-				getActivity().getActionBar().setSelectedNavigationItem(getActivity().getActionBar().getTabCount()-1);
+				getActivity().getActionBar().setSelectedNavigationItem(getActivity().getActionBar().getTabCount() - 1);
 //				Toast.makeText(rootView.getContext(), "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
 			}
 		});
@@ -46,7 +58,6 @@ public class ListTab extends Fragment {
 
 	public static class ListAdapter extends BaseAdapter implements CatDiff {
 		private Context mContext;
-		private ArrayList<Category> cats = new ArrayList<Category>();
 
 		public ListAdapter(Context c) {
 			mContext = c;
@@ -56,19 +67,30 @@ public class ListTab extends Fragment {
 
 		public void catu() {
 			items.clear();
-			cats.clear();
 			List<Category> active = Categories.getActive();
-			loop:
-			for (Place p : Places.places) {
-				for (String cat : p.cats)
-					for (Category c : active) {
-						if (c.name.equals(cat)) {
-							items.add(p);
-							cats.add(c);
-							continue loop;
+			if (active.size() == 0) {
+				for (Place p : Places.places) {
+					items.add(new Item(p, Categories.getCat(p.cats.get(0))));
+				}
+			} else {
+				loop:
+				for (Place p : Places.places) {
+					for (String cat : p.cats)
+						for (Category c : active) {
+							if (c.name.equals(cat)) {
+								items.add(new Item(p, c));
+								continue loop;
+							}
 						}
-					}
+				}
 			}
+
+			Collections.sort(items, new Comparator<Item>() {
+				@Override
+				public int compare(Item lhs, Item rhs) {
+					return lhs.p.dist - rhs.p.dist;
+				}
+			});
 			notifyDataSetChanged();
 		}
 
@@ -98,11 +120,11 @@ public class ListTab extends Fragment {
 			TextView textName = (TextView) rowView.findViewById(R.id.list_name);
 			TextView textDesc = (TextView) rowView.findViewById(R.id.list_desc);
 			ImageView imageView = (ImageView) rowView.findViewById(R.id.list_icon);
-			Place p = items.get(position);
+			Place p = items.get(position).p;
 			textName.setText(p.name);
 			textDesc.setText(p.desc);
 			textDist.setText("" + p.dist);
-			imageView.setImageResource(cats.get(position).imgID);
+			imageView.setImageResource(items.get(position).cat.imgID);
 			return rowView;
 		}
 

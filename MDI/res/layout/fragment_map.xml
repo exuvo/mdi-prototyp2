@@ -43,19 +43,19 @@
         android:id="@+id/imagepizza"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/imagemuseum"
-        android:layout_alignLeft="@+id/imagecoffe"
-        android:layout_marginBottom="94dp"
+        android:layout_alignLeft="@+id/karta"
+        android:layout_alignTop="@+id/imagemuseum"
+        android:layout_marginLeft="55dp"
         android:src="@drawable/pizza" />
 
     <ImageView
         android:id="@+id/imagefood"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/imagepizza"
-        android:layout_marginBottom="39dp"
-        android:layout_marginRight="57dp"
-        android:layout_toLeftOf="@+id/imagepizza"
+        android:layout_alignLeft="@+id/imagepizza"
+        android:layout_alignTop="@+id/imagecoffe"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="27dp"
         android:src="@drawable/restaurant" />
 
 </RelativeLayout>

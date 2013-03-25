@@ -12,7 +12,7 @@ public class Places {
 			new Place("A", "a", 1, new String[] { "touhou" }), new Place("F", "f", 23, new String[] { "food" }),
 			new Place("B", "b", 2, new String[] { "café" }), new Place("G", "g", 9, new String[] { "food" }),
 			new Place("C", "c", 3, new String[] { "touhou" }), new Place("H", "h", 150, new String[] { "food" }),
-			new Place("D", "d", 4, new String[] { "museum" }), new Place("I", "i", 242, new String[] { "pizza" }),
+			new Place("D", "d", 4, new String[] { "museum" }), new Place("I", "i", 242, new String[] { "food","pizza" }),
 			new Place("E", "e", 5, new String[] { "café" }), new Place("J", "j", 123, new String[] { "food" }) });
 	
 	public static Place destination;

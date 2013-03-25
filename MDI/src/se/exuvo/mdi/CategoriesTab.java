@@ -95,6 +95,7 @@ public class CategoriesTab extends Fragment {
 							v.getBackground().clearColorFilter();
 		                    v.invalidate();
 						}
+						Places.destination = null;
 						Categories.notifyChanged();
 					}
 				});
